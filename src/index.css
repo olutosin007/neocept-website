@@ -1,0 +1,107 @@
+/* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+/* CRITICAL: THE FOLLOWING TAILWIND IMPORTS MUST NEVER BE DELETED OR REORDERED — DO NOT DELETE THIS COMMENT */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
+
+:root {
+  --color-navy: #0F1B35;
+  --color-gold: #C9A84C;
+  --color-blue: #1764ae;
+  --color-white: #FFFFFF;
+  --color-cream: #F8F5EF;
+  --color-light-blue: #EEF4FB;
+  --color-deep-dark: #080E1C;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-white);
+  color: var(--color-navy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+/* SVG Grid Pattern for hero and CTA */
+.grid-pattern-hero {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='white' stroke-width='0.5' stroke-opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+.grid-pattern-cta {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='white' stroke-width='0.5' stroke-opacity='0.06'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+/* Diagonal section divider */
+.clip-diagonal-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+}
+.clip-diagonal-top {
+  clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%);
+}
+/* Work row hover */
+.work-row {
+  transition: background-color 0.2s ease, border-left-color 0.2s ease;
+  border-left: 3px solid transparent;
+}
+.work-row:hover {
+  background-color: var(--color-light-blue);
+  border-left-color: var(--color-gold);
+}
+/* Nav transition */
+.nav-scrolled {
+  box-shadow: 0 2px 20px rgba(15, 27, 53, 0.08);
+}
+/* Scroll offset for fixed nav */
+section[id] {
+  scroll-margin-top: 80px;
+}
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid #C9A84C;
+  outline-offset: 2px;
+}
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* GPU layer hints for animated elements */
+.will-animate {
+  will-change: transform, opacity;
+}
+/* Link underline hover animation */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background-color: #C9A84C;
+  transition: width 0.3s ease;
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+/* Sharp corners global override */
+button, .btn {
+  border-radius: 0 !important;
+}
