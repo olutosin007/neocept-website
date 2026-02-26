@@ -67,7 +67,7 @@ export function PrivacyPage() {
                 <p className="mt-4">
                   <strong>Contact Details:</strong>
                   <br />
-                  Email: hello@neocept.com
+                  Email: hello@neocept.co.uk
                   <br />
                   Website: neocept.co
                 </p>
@@ -205,7 +205,7 @@ export function PrivacyPage() {
                   <li>Withdraw consent at any time</li>
                 </ul>
                 <p className="mt-4">
-                  To exercise these rights, contact us at hello@neocept.com. We
+                  To exercise these rights, contact us at hello@neocept.co.uk. We
                   will respond within one month.
                 </p>
               </section>

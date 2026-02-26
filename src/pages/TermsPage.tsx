@@ -186,10 +186,10 @@ export function TermsPage() {
                 If you have any questions about these Terms, please contact us
                 at{' '}
                 <a
-                  href="mailto:hello@neocept.com"
+                  href="mailto:hello@neocept.co.uk"
                   className="text-[#1764ae] hover:underline"
                 >
-                  hello@neocept.com
+                  hello@neocept.co.uk
                 </a>
                 .
               </p>

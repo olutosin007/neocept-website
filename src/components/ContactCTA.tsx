@@ -84,11 +84,11 @@ export function ContactCTA({ variant = 'full' }: ContactCTAProps) {
             Start a Project
           </Link>
           <a
-            href="mailto:hello@neocept.com"
+            href="mailto:hello@neocept.co.uk"
             className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/50 text-white font-body text-sm tracking-wide hover:border-white transition-all duration-200"
             style={{ borderRadius: 0 }}
           >
-            hello@neocept.com
+            hello@neocept.co.uk
             <span className="inline-block group-hover:translate-x-1 transition-transform duration-200">
               →
             </span>
