@@ -1,132 +1,107 @@
-# Sprint 3 — Content Engine & Growth
+# Sprint 3 — MVP Polish, Performance & Launch
 
 | Field              | Value                                                          |
 | ------------------ | -------------------------------------------------------------- |
 | **Document ID**    | SPR-003                                                        |
 | **Sprint**         | 3 of 3                                                         |
-| **Sprint Name**    | Content Engine & Growth                                        |
-| **Scope**          | CMS, blog system, case studies, analytics, performance, growth |
-| **Ref**            | FSD-001 (F-006, F-008, F-015, F-017, F-018)                   |
+| **Sprint Name**    | MVP Polish, Performance & Launch                               |
+| **Scope**          | Content expansion, analytics, performance optimization, launch prep |
+| **Ref**            | FSD-001 (F-008, F-017, F-018)                                  |
 | **Depends On**     | SPR-002 (Sprint 2 complete)                                    |
 | **Status**         | Not Started                                                    |
 | **Date Created**   | 2026-02-25                                                     |
-| **Last Updated**   | 2026-02-25                                                     |
+| **Last Updated**   | 2026-02-26                                                     |
 
 ---
 
 ## 1. Sprint Objective
 
-Turn the website from a polished brochure into a living content platform. This sprint connects a headless CMS, builds out the blog and case study systems, adds analytics, and optimises performance for production deployment. By the end, Neocept's team can publish articles, update case studies, and track visitor engagement without touching code.
+**Polish, perform, and publish.** Finalize the existing site for production launch with performance optimizations, expanded static content, and lightweight analytics — using only no-cost services already in use (Vercel, Formspree).
 
-The site should function as a growth engine — every piece of content is discoverable, shareable, and measurable.
+This sprint intentionally avoids adding CMS complexity or external paid services. The goal is a production-ready MVP that can launch immediately and scale later.
 
 ---
 
-## 2. Design Principles (Sprint-wide)
+## 2. MVP Guardrails (Sprint-wide)
 
-1. **Content as product** — Every blog post and case study is a marketing asset. The reading experience should rival publications like Monocle or Fast Company — beautiful typography, generous spacing, intentional imagery.
-2. **Author autonomy** — The CMS workflow must be intuitive enough that a non-technical team member can draft, preview, and publish content without developer involvement.
-3. **Measurable by default** — Every meaningful interaction is tracked. Analytics are not surveillance — they're a feedback loop for making the site better.
-4. **Speed at scale** — As content grows from 4 articles to 40, performance must remain exceptional. Build for the catalogue you'll have in 12 months, not the one you have today.
+1. **No new external services** — Use only Vercel (hosting + analytics), Formspree (forms), and the existing domain setup.
+2. **Static content is fine** — Content lives in code until volume justifies a CMS (10+ articles, 3+ case studies).
+3. **Ship what exists** — Expand and polish sections already on the homepage. Do not build speculative features.
+4. **Performance is a feature** — Fast load times and high Lighthouse scores are launch requirements, not nice-to-haves.
+5. **Zero monthly cost** — All services must remain within free tiers.
 
 ---
 
 ## 3. Task Breakdown
 
-### 3.1 · CMS Integration (F-015)
+### 3.1 · Thinking Content Expansion (Static)
 
 | Task ID | Description | Priority |
 | ------- | ----------- | -------- |
-| S3-01 | Evaluate and select headless CMS. Recommended: **Sanity** (real-time preview, flexible schema, generous free tier) or **Contentful** (enterprise-grade, structured content). Decision based on team preference and budget. | P0 |
-| S3-02 | Set up CMS project, define content schemas: `article` (title, slug, category, author, publishDate, excerpt, body, featuredImage, readingTime), `caseStudy` (client, slug, category, year, heroImage, challenge, approach, outcome, testimonial, gallery), `teamMember` (name, role, bio, photo, linkedIn), `service` (title, description, capabilities). | P0 |
-| S3-03 | Install CMS client SDK in the project. Create a data-fetching utility layer (`lib/cms.ts`) with typed functions: `getArticles()`, `getArticleBySlug()`, `getCaseStudies()`, `getCaseStudyBySlug()`, `getTeamMembers()`, `getServices()`. | P0 |
-| S3-04 | Seed the CMS with initial content: 2 articles (expand the existing placeholders into full pieces), 4 case studies (matching the current work section), team members, and service descriptions. | P0 |
-| S3-05 | Set up CMS preview mode — a draft URL that renders unpublished content for editorial review before publishing. | P1 |
-| S3-06 | Connect the homepage sections to CMS data: Services (F-005) pulls from `service` schema, Work (F-006) pulls from `caseStudy` schema, Thinking (F-008) pulls from `article` schema, Stats (F-004) pulls from a `siteSettings` singleton. | P0 |
+| S3-01 | Expand "The Myth of the Creative Machine" into a full article (600–800 words) with proper structure, headings, and a conclusion. Content remains static in `ThinkingArticlePage.tsx` or a dedicated data file. | P0 |
+| S3-02 | Expand "Why Most Rebrands Fail Before They Launch" into a full article (600–800 words) with the same treatment. | P0 |
+| S3-03 | Enhance article page typography for long-form reading: 18px body text, 1.75 line-height, styled block quotes with gold left border, generous heading margins. | P0 |
+| S3-04 | Add "Back to Thinking" navigation link at top of article pages. | P1 |
+| S3-05 | Add Contact CTA component at the bottom of each article page. | P1 |
 
-**Architecture Notes:**
-The CMS should be the single source of truth for all content. Hardcoded strings in components are replaced with CMS-driven data. The data-fetching layer should handle loading states, error states, and caching. Consider SWR or React Query for client-side caching if staying with CSR, or evaluate moving to a framework with SSR/SSG (Next.js) if SEO requirements demand it — document this decision.
+**Content Notes:**
+Articles should position Neocept as thought leaders. Each piece should leave the reader with a new perspective on branding, AI, or creative strategy. The writing should be confident, specific, and opinionated — not generic content marketing.
 
 ---
 
-### 3.2 · Case Study Pages (F-006 Extension)
+### 3.2 · Analytics (No-Cost)
 
 | Task ID | Description | Priority |
 | ------- | ----------- | -------- |
-| S3-07 | Create the `/work/:slug` route and `CaseStudyPage` component. | P0 |
-| S3-08 | **Hero section:** Full-width hero image with a dark overlay. Client name (display font, white), category pill, and year. Below the image: a one-line project summary. | P0 |
-| S3-09 | **Challenge / Approach / Outcome structure.** Three distinct content blocks, each with a gold section label and body copy. This is the narrative spine of every case study. The writing should read like a strategy brief, not a portfolio caption. | P0 |
-| S3-10 | **Image gallery.** A masonry or structured grid of project imagery (3–6 images). Lightbox on click. Lazy-loaded with blur-up placeholder. | P1 |
-| S3-11 | **Client testimonial block.** A styled pull-quote with the client's name and role. Gold left border. Display font for the quote, body font for attribution. | P1 |
-| S3-12 | **Next project navigation.** At the bottom: "Next Project →" linking to the next case study in sequence (wraps around). Shows the next project's name and category. | P1 |
-| S3-13 | **CTA block.** Reuse the `ContactCTA` component. Every case study ends with an invitation to start a project. | P0 |
-| S3-14 | Create the `/work` index page: a grid or list of all case studies. Each card shows: hero image (cropped), client name, category, year, one-line description. Consistent with the homepage work section aesthetic but expanded. | P0 |
-| S3-15 | Add category filtering to the work index page. Filter pills at the top: "All", "Brand Identity", "AI Campaign", "Creative Strategy", "Communication Design". Active filter highlighted in blue. | P1 |
+| S3-06 | Enable **Vercel Analytics** via the Vercel dashboard (free tier, zero-config, GDPR-friendly, no additional cookie banner required). | P0 |
+| S3-07 | Install `@vercel/analytics` package and add the `<Analytics />` component to the app. | P0 |
+| S3-08 | Verify SPA route changes are tracked correctly (not just initial page load). | P0 |
+| S3-09 | Document key metrics to monitor: page views, top pages, referrers, device breakdown. | P1 |
 
-**Messaging Direction:**
-Case studies are the most powerful sales tool on the site. Each one should answer the prospect's unspoken question: "Can they do this for me?" The Challenge/Approach/Outcome structure creates narrative tension and resolution. Language should be specific: "increased brand recall by 34%" is more persuasive than "enhanced brand perception." Even if exact metrics aren't available, the writing should feel grounded and evidence-based.
-
-**Visual Direction:**
-Case study pages should feel like a premium editorial spread. Large imagery, generous margins, typographic contrast between sections. The hero image should be full-bleed and cinematic. The overall reading experience should reward scrolling — every scroll position reveals a new visual beat.
+**Why Vercel Analytics:**
+- Included free with Vercel hosting
+- Privacy-friendly (no cookies, no personal data collection)
+- Automatically tracks Core Web Vitals
+- No additional cookie consent requirements beyond existing banner
 
 ---
 
-### 3.3 · Blog / Thinking Pages (F-008 Extension)
+### 3.3 · Performance Optimization
 
 | Task ID | Description | Priority |
 | ------- | ----------- | -------- |
-| S3-16 | Create the `/thinking/:slug` route and `ArticlePage` component. | P0 |
-| S3-17 | **Article hero:** Category pill, title (display font, large), author name + publish date + reading time, featured image (full-width below title, or as a background). | P0 |
-| S3-18 | **Article body:** Render rich text from CMS. Support: paragraphs, headings (h2, h3), bold, italic, block quotes (styled with gold left border), ordered/unordered lists, inline code, images with captions, and embedded media. Max-width: 680 px (optimal reading width). | P0 |
-| S3-19 | **Typography for long-form reading:** Body text at 18 px / 1.75 line-height. Headings break with generous top margin (mt-12). Block quotes in italic with 24 px left padding. Links underlined in blue. | P0 |
-| S3-20 | **Author card.** At the bottom of the article: author photo (circular), name, one-line bio, optional LinkedIn link. | P1 |
-| S3-21 | **Related articles.** Below the author card: 2 related articles based on category match. Reuse the article card component from the homepage. | P1 |
-| S3-22 | **Social sharing.** Floating or inline share buttons: LinkedIn, X (Twitter), copy-link. Minimal styling — icon-only, navy/50 colour, darken on hover. | P2 |
-| S3-23 | Create the `/thinking` index page: a listing of all published articles. Each card: featured image (optional), category, title, excerpt (2 lines max), date, reading time. 2-column grid on desktop, single column on mobile. | P0 |
-| S3-24 | Add category filtering to the thinking index: "All", "AI & Creativity", "Brand Strategy", "Industry Insights." | P1 |
-| S3-25 | Add pagination or infinite scroll to the thinking index (load 6 articles initially, "Load More" button for next batch). | P2 |
-
-**Messaging Direction:**
-Blog articles position Neocept as thinkers who shape the industry conversation, not just respond to it. Every article should leave the reader thinking differently about branding, AI, or creative strategy. Headlines should be provocative but credible. Summaries should create tension that demands resolution. This is thought leadership, not content marketing.
+| S3-10 | Add `loading="lazy"` attribute to all below-the-fold images (hero background excluded). | P0 |
+| S3-11 | Implement route-based code splitting: wrap page components with `React.lazy()` and `<Suspense>` with a minimal loading state. | P1 |
+| S3-12 | Preload critical fonts: add `<link rel="preload">` for DM Serif Display and DM Sans WOFF2 files in `index.html`. Verify `font-display: swap` is active. | P0 |
+| S3-13 | Run Lighthouse audit on all MVP routes. Target scores: Performance > 90, Accessibility > 95, Best Practices > 95, SEO > 95. Document baseline scores. | P0 |
+| S3-14 | Verify Tailwind CSS purge configuration removes unused utilities. Check final CSS bundle size. | P1 |
+| S3-15 | Optimize hero background image: compress to WebP format, ensure appropriate resolution (1920px max width). | P1 |
 
 ---
 
-### 3.4 · Analytics & Tracking (F-017)
+### 3.4 · SEO Completion
 
 | Task ID | Description | Priority |
 | ------- | ----------- | -------- |
-| S3-26 | Integrate analytics platform. Recommended: **Plausible Analytics** (privacy-first, no cookie banner required, lightweight script) or **Google Analytics 4** (richer features, requires consent). Decision based on brand values and compliance posture. | P0 |
-| S3-27 | Track page views across all routes. Ensure SPA route changes are captured correctly (not just initial page load). | P0 |
-| S3-28 | Implement event tracking for key interactions: "Start a Project" CTA clicks (all instances), contact form submissions (success/fail), case study views, article reads (scroll to 75% = "read"), social link clicks, "Begin the Conversation" hero CTA. | P0 |
-| S3-29 | If using GA4: implement a cookie consent banner. Must be GDPR/CCPA compliant. Design: minimal bottom bar, brand-consistent styling, "Accept" / "Decline" / "Preferences" options. No dark patterns. | P1 |
-| S3-30 | Set up UTM parameter tracking for campaign attribution. Ensure UTM params are preserved through SPA navigation. | P2 |
-| S3-31 | Create a simple analytics dashboard or document the key metrics to monitor: weekly visitors, top pages, CTA conversion rate, form submission rate, article engagement. | P2 |
+| S3-16 | Add Organisation JSON-LD structured data to homepage (`HomePage.tsx` or `SEO.tsx`). Include: name, url, logo, contactPoint, sameAs (social links if applicable). | P0 |
+| S3-17 | Create a single branded OG image (1200×630px) with Neocept branding. Save to `public/og-image.png`. | P1 |
+| S3-18 | Verify all pages have unique `<title>` and `<meta description>` tags. | P0 |
+| S3-19 | Verify sitemap.xml includes all current routes and is accessible. | P1 |
 
 ---
 
-### 3.5 · Performance Optimisation (F-018)
+### 3.5 · Final QA & Launch Preparation
 
 | Task ID | Description | Priority |
 | ------- | ----------- | -------- |
-| S3-32 | Implement image optimisation pipeline: all CMS images served in WebP format with responsive `srcset` (640 px, 960 px, 1280 px, 1920 px). Use the CMS's built-in image transformation API (Sanity Image URL, Contentful Images API). | P0 |
-| S3-33 | Add lazy loading to all below-the-fold images. Use `loading="lazy"` for static images and Intersection Observer for CMS images that need blur-up placeholders. | P0 |
-| S3-34 | Implement route-based code splitting: each page component is lazy-loaded with `React.lazy()` and wrapped in `<Suspense>` with a minimal loading skeleton. | P1 |
-| S3-35 | Preload critical fonts. Add `<link rel="preload">` for DM Serif Display (400) and DM Sans (400) WOFF2 files. Verify `font-display: swap` is active. | P0 |
-| S3-36 | Run Lighthouse audit on all pages. Target: Performance > 90, Accessibility > 95, Best Practices > 95, SEO > 95 on both mobile and desktop. Document baseline scores. | P0 |
-| S3-37 | Implement Vite build optimisations: enable gzip/brotli compression plugin, set appropriate cache headers, tree-shake unused Tailwind utilities with `content` purge config verification. | P1 |
-| S3-38 | Add a loading skeleton / shimmer component for CMS-driven content that appears while data is being fetched. Should feel intentional, not broken. | P1 |
-
----
-
-### 3.6 · Growth & Engagement Features
-
-| Task ID | Description | Priority |
-| ------- | ----------- | -------- |
-| S3-39 | **Newsletter signup.** A simple email capture form in the footer and optionally on the `/thinking` index page. Fields: email only. Integration with an email platform (Resend, Mailchimp, ConvertKit). Success message: "You're in. We'll share our latest thinking." | P1 |
-| S3-40 | **Service detail pages.** Create `/services/:slug` routes for each service. Content pulled from CMS. Each page: hero statement, detailed capability list with descriptions, relevant case studies, CTA. | P1 |
-| S3-41 | **OG images.** Generate branded Open Graph images for each page (1200×630 px). Can be static (designed in Figma, uploaded to CMS) or dynamic (generated via an edge function). Each OG image should include the page title on the Neocept navy background with the gold rule. | P2 |
-| S3-42 | **RSS feed.** Auto-generate an RSS feed (`/feed.xml`) from published blog articles. Enables syndication and podcast app discovery. | P2 |
-| S3-43 | **Sitemap automation.** Replace the manual `sitemap.xml` with a dynamically generated one that includes all CMS-driven routes (case studies, articles, service pages). | P1 |
+| S3-20 | Cross-browser testing: Chrome, Firefox, Safari, Edge (latest versions). Document any issues. | P0 |
+| S3-21 | Mobile testing: iOS Safari, Chrome Android. Test all interactive elements (nav, forms, CTAs). | P0 |
+| S3-22 | Verify all internal links work correctly (no 404s). | P0 |
+| S3-23 | Verify all external links open in new tabs and work correctly. | P1 |
+| S3-24 | Final accessibility spot-check: keyboard navigation through all routes, focus visibility, screen reader announcement of key elements. | P1 |
+| S3-25 | Verify contact form submission works in production (test with real submission). | P0 |
+| S3-26 | Verify cookie banner and preferences modal function correctly. | P0 |
+| S3-27 | Document any known issues, limitations, or future improvements in a `KNOWN_ISSUES.md` file. | P2 |
 
 ---
 
@@ -134,46 +109,74 @@ Blog articles position Neocept as thinkers who shape the industry conversation, 
 
 Sprint 3 is complete when:
 
-- [ ] A headless CMS is integrated and all homepage content is CMS-driven
-- [ ] The team can create, edit, preview, and publish articles and case studies without code changes
-- [ ] At least 2 full case study pages are live with real or representative content
-- [ ] At least 2 full blog articles are live with complete long-form content
-- [ ] The `/work` index page displays all case studies with category filtering
-- [ ] The `/thinking` index page displays all articles with category filtering
-- [ ] Analytics are capturing page views and key events on all routes
-- [ ] All images are optimised (WebP, lazy-loaded, responsive)
-- [ ] Route-based code splitting is implemented
-- [ ] Lighthouse scores meet targets (Performance > 90, Accessibility > 95)
-- [ ] Newsletter signup form is functional (footer placement minimum)
-- [ ] Sitemap is auto-generated from CMS content
+- [ ] Both Thinking articles are expanded with full, readable content (600–800 words each)
+- [ ] Article pages have proper long-form typography and navigation
+- [ ] Vercel Analytics is enabled and tracking page views across all routes
+- [ ] Lighthouse Performance score > 90 on all pages
+- [ ] Lighthouse Accessibility score > 95 on all pages
+- [ ] Organisation JSON-LD structured data is present on homepage
+- [ ] OG image exists at `public/og-image.png` and is referenced in SEO component
+- [ ] Cross-browser testing complete (Chrome, Firefox, Safari, Edge) with no critical issues
+- [ ] Mobile testing complete (iOS Safari, Chrome Android) with no critical issues
+- [ ] Contact form works in production
+- [ ] Cookie consent system works correctly
+- [ ] Site is production-ready for public launch
 
 ---
 
-## 5. Out of Scope (Sprint 3)
+## 5. Out of Scope (Sprint 3 — Deferred to Future Release)
 
-- Dark mode / theme toggle (backlog — deferred per F-021)
-- Multilingual / i18n support
-- E-commerce or gated content
-- User authentication
-- A/B testing infrastructure
-- Automated email sequences (beyond newsletter confirmation)
+| Item | Rationale |
+| ---- | --------- |
+| Headless CMS (Sanity, Contentful, etc.) | No content volume to justify; adds complexity. Revisit when 10+ articles exist. |
+| Case Studies / Work section | Hidden on homepage; requires real client content and imagery. |
+| Newsletter signup | Requires email platform integration (Mailchimp, ConvertKit, Resend). |
+| Service detail pages (`/services/:slug`) | Current `/services` page is comprehensive; no need to fragment. |
+| Dynamic sitemap generation | Static sitemap sufficient for current 10 routes. |
+| RSS feed | Only 2 articles; no syndication need. |
+| Category filtering on Thinking page | Only 2 articles; filtering adds no value. |
+| Pagination / infinite scroll | Only 2 articles. |
+| Author cards with photos | No team section on homepage to derive from. |
+| Social sharing buttons | Low priority; can be added post-launch. |
+| Google Analytics 4 | Requires additional consent handling; Vercel Analytics is simpler. |
 
-These may be addressed in future sprints as the platform matures.
+These items are not cancelled — they are deferred until the business case exists (more content, more traffic, specific marketing needs).
 
 ---
 
-## 6. Post-Sprint: Deployment & Launch Checklist
+## 6. Cost Summary
 
-After Sprint 3, the site is ready for production deployment. A separate launch checklist should cover:
+| Service | Tier | Monthly Cost |
+| ------- | ---- | ------------ |
+| Vercel Hosting | Hobby (Free) | $0 |
+| Vercel Analytics | Included | $0 |
+| Formspree | Free (50 submissions/month) | $0 |
+| Domain (neocept.co) | Already owned | — |
+| **Total** | | **$0/month** |
 
-- [ ] Domain and DNS configuration
-- [ ] SSL certificate provisioned
-- [ ] CDN configured (Vercel, Cloudflare, or AWS CloudFront)
-- [ ] Environment variables secured (CMS tokens, API keys)
-- [ ] Error monitoring (Sentry or equivalent)
-- [ ] Uptime monitoring
-- [ ] 301 redirects from old site URLs (if applicable)
-- [ ] Final cross-browser testing (Chrome, Firefox, Safari, Edge)
-- [ ] Final mobile testing (iOS Safari, Chrome Android)
-- [ ] Backup and rollback plan documented
-- [ ] Client sign-off on content and design
+---
+
+## 7. Post-Sprint: Production Launch Checklist
+
+After Sprint 3, the site is ready for public launch. Final checklist:
+
+- [ ] Vercel production deployment is stable
+- [ ] Custom domain (neocept.co) resolving correctly
+- [ ] SSL certificate active (automatic via Vercel)
+- [ ] Analytics dashboard accessible and tracking
+- [ ] Contact form tested with real submission
+- [ ] Social links updated (if applicable)
+- [ ] Team notified of launch
+- [ ] Monitoring in place (Vercel provides basic uptime)
+
+---
+
+## 8. Future Roadmap (Post-MVP)
+
+When the business is ready, these features can be prioritized:
+
+1. **Case Studies** — When 2–3 real client projects are ready to showcase
+2. **CMS Integration** — When content volume exceeds 10 articles or requires non-developer updates
+3. **Newsletter** — When email marketing strategy is defined
+4. **Team Section** — When team profiles and photos are ready
+5. **Advanced Analytics** — When deeper insights (events, funnels) are needed
