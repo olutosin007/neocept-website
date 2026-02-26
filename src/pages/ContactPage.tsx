@@ -475,7 +475,7 @@ function SuccessState() {
           animate={inView ? 'visible' : 'hidden'}
           custom={0.2}
         >
-          We'll be in touch within 24 hours.
+          We'll be in touch shortly.
         </motion.p>
 
         <motion.div
