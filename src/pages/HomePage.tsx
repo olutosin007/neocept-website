@@ -146,8 +146,9 @@ function HeroSection() {
               animate="visible"
               custom={0.3}
             >
-              We build brands that lead markets — powered by strategic clarity
-              and creative AI.
+              We build brands that lead markets.
+              <br />
+              Powered by human insight. Amplified by AI.
             </motion.p>
           </div>
 
