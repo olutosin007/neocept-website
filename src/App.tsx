@@ -441,8 +441,8 @@ export function App() {
       <section className="bg-[#1764ae] w-full">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20">
-            <StatItem value={40} suffix="+" label="Clients" delay={0} />
-            <StatItem value={120} suffix="+" label="Projects" delay={0.12} />
+            <StatItem value={30} suffix="+" label="Partnerships" delay={0} />
+            <StatItem value={80} suffix="+" label="Success Stories" delay={0.12} />
             <StatItem value={12} suffix="" label="Industries" delay={0.24} />
             <StatItem value={3} suffix="" label="Continents" delay={0.36} />
           </div>
