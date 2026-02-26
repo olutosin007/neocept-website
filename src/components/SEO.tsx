@@ -7,6 +7,7 @@ interface SEOProps {
   ogImage?: string;
   ogType?: string;
   canonical?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
 const BASE_URL = 'https://neocept.co';
@@ -18,6 +19,7 @@ export function SEO({
   ogImage = DEFAULT_OG_IMAGE,
   ogType = 'website',
   canonical,
+  jsonLd,
 }: SEOProps) {
   const fullOgImage = ogImage.startsWith('http') ? ogImage : `${BASE_URL}${ogImage}`;
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? window.location.href : '');
@@ -43,6 +45,11 @@ export function SEO({
 
       {/* Canonical */}
       {canonical && <link rel="canonical" href={canonical} />}
+
+      {/* JSON-LD Structured Data */}
+      {jsonLd && (
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      )}
     </Helmet>
   );
 }

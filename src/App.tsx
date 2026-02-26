@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Nav } from './components/Nav';
 import { Footer } from './components/Footer';
@@ -9,16 +10,46 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { CookieBanner } from './components/CookieBanner';
 import { CookiePreferences } from './components/CookiePreferences';
 
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesPage } from './pages/ServicesPage';
-import { ThinkingPage } from './pages/ThinkingPage';
-import { ThinkingArticlePage } from './pages/ThinkingArticlePage';
-import { ContactPage } from './pages/ContactPage';
-import { PrivacyPage } from './pages/PrivacyPage';
-import { CookiesPage } from './pages/CookiesPage';
-import { TermsPage } from './pages/TermsPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+const HomePage = lazy(() =>
+  import('./pages/HomePage').then((m) => ({ default: m.HomePage }))
+);
+const AboutPage = lazy(() =>
+  import('./pages/AboutPage').then((m) => ({ default: m.AboutPage }))
+);
+const ServicesPage = lazy(() =>
+  import('./pages/ServicesPage').then((m) => ({ default: m.ServicesPage }))
+);
+const ThinkingPage = lazy(() =>
+  import('./pages/ThinkingPage').then((m) => ({ default: m.ThinkingPage }))
+);
+const ThinkingArticlePage = lazy(() =>
+  import('./pages/ThinkingArticlePage').then((m) => ({
+    default: m.ThinkingArticlePage,
+  }))
+);
+const ContactPage = lazy(() =>
+  import('./pages/ContactPage').then((m) => ({ default: m.ContactPage }))
+);
+const PrivacyPage = lazy(() =>
+  import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage }))
+);
+const CookiesPage = lazy(() =>
+  import('./pages/CookiesPage').then((m) => ({ default: m.CookiesPage }))
+);
+const TermsPage = lazy(() =>
+  import('./pages/TermsPage').then((m) => ({ default: m.TermsPage }))
+);
+const NotFoundPage = lazy(() =>
+  import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage }))
+);
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-[#0F1B35] flex items-center justify-center">
+      <div className="w-12 h-12 border-2 border-[#C9A84C] border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
 function Layout() {
   const [showCookiePreferences, setShowCookiePreferences] = useState(false);
@@ -67,20 +98,23 @@ export function App() {
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/thinking" element={<ThinkingPage />} />
-            <Route path="/thinking/:slug" element={<ThinkingArticlePage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/cookies" element={<CookiesPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/thinking" element={<ThinkingPage />} />
+              <Route path="/thinking/:slug" element={<ThinkingArticlePage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/cookies" element={<CookiesPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+        <Analytics />
       </BrowserRouter>
     </HelmetProvider>
   );

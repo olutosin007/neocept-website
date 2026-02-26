@@ -27,12 +27,29 @@ const SERVICE_ICONS: Record<string, React.ElementType> = {
   'Data-Driven Creative': BarChart3,
 };
 
+const ORGANIZATION_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Neocept',
+  url: 'https://neocept.co',
+  logo: 'https://neocept.co/Neocept_logo_blu.png',
+  description:
+    'Brand strategy and AI solutions for market leaders. We build brands that lead markets — powered by strategic clarity and creative AI.',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'hello@neocept.co.uk',
+    contactType: 'customer service',
+  },
+  sameAs: [],
+};
+
 export function HomePage() {
   return (
     <>
       <SEO
         title="Neocept — Where Strategy Meets Intelligence"
         description="Brand strategy and AI solutions for market leaders. We build brands that lead markets — powered by strategic clarity and creative AI."
+        jsonLd={ORGANIZATION_SCHEMA}
       />
 
       {/* Hero */}
@@ -403,7 +420,7 @@ function ThinkingSection() {
             agencies that thrive will be the ones that know the difference.
           </p>
           <span className="font-body text-xs text-navy/40 block mb-6">
-            4 min read
+            6 min read
           </span>
           <Link
             to="/thinking/the-myth-of-the-creative-machine"
@@ -435,7 +452,7 @@ function ThinkingSection() {
             else.
           </p>
           <span className="font-body text-xs text-navy/40 block mb-6">
-            5 min read
+            7 min read
           </span>
           <Link
             to="/thinking/why-most-rebrands-fail"

@@ -30,6 +30,7 @@ export function Footer({ onOpenCookieSettings }: FooterProps) {
             alt="Neocept"
             className="h-8 w-auto"
             style={{ filter: 'brightness(0) invert(1)' }}
+            loading="lazy"
           />
         </Link>
 

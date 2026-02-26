@@ -22,7 +22,7 @@ const ARTICLES: Article[] = [
     date: 'Feb 2026',
     teaser:
       "AI doesn't replace creative thinking — it raises the stakes. The agencies that thrive will be the ones that know the difference.",
-    readTime: '4 min read',
+    readTime: '6 min read',
   },
   {
     slug: 'why-most-rebrands-fail',
@@ -31,7 +31,7 @@ const ARTICLES: Article[] = [
     date: 'Jan 2026',
     teaser:
       "Most rebrands collapse under the weight of internal politics, not bad design. Here's how to build alignment before you build anything else.",
-    readTime: '5 min read',
+    readTime: '7 min read',
   },
 ];
 
