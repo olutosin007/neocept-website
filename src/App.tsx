@@ -152,15 +152,14 @@ function StatItem({
 const LOGO_URL = "/Neocept_logo_blu.png";
 
 // ─── Main App ─────────────────────────────────────────────────────────────────
-const NAV_SECTIONS = ['work', 'services', 'about', 'thinking', 'contact'];
-const NAV_LINKS = ['Work', 'Services', 'About', 'Thinking'];
+const NAV_SECTIONS = ['services', 'about', 'thinking', 'contact'];
+const NAV_LINKS = ['Services', 'About', 'Thinking'];
 
 export function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const activeSection = useActiveSection(NAV_SECTIONS);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -220,7 +219,7 @@ export function App() {
 
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
           <a href="#hero" className="flex-shrink-0">
-            <img src={LOGO_URL} alt="Neocept" className="h-7 w-auto" />
+            <img src={LOGO_URL} alt="Neocept" className="h-9 w-auto" />
           </a>
 
           <div className="hidden md:flex items-center gap-8">
@@ -307,15 +306,19 @@ export function App() {
       {/* ── 2. HERO ────────────────────────────────────────────────────────── */}
       <section
         id="hero"
-        className="relative min-h-screen bg-[#0F1B35] grid-pattern-hero flex items-center pt-16 overflow-hidden">
+        className="relative min-h-screen bg-[#0F1B35] flex items-center pt-16 overflow-hidden">
 
-        {/* Geometric blue accent — bottom right, parallax */}
-        <motion.div
-          className="absolute bottom-0 right-0 w-[42%] h-[62%] bg-[#1764ae] pointer-events-none"
-          style={{
-            opacity: 0.13,
-            y: useTransform(scrollY, [0, 1000], [0, -150])
-          }} />
+        {/* Hero background image */}
+        <div className="absolute inset-0 pointer-events-none">
+          <img
+            src="/hero-background-image-1.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Blue overlay layer for composition and legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A2A52]/70 via-[#0F1B35]/68 to-[#0B1A33]/80 pointer-events-none" />
 
         {/* Subtle gold accent line — vertical, left side */}
         <div className="absolute left-0 top-1/4 bottom-1/4 w-px bg-gold/20 pointer-events-none" />
@@ -345,7 +348,7 @@ export function App() {
                 <span className="text-[#C9A84C]">Intelligence.</span>
               </motion.h1>
               <motion.p
-                className="mt-6 font-body text-base md:text-lg text-white/60 font-light max-w-md leading-relaxed"
+                className="mt-6 font-body text-base md:text-lg text-white/85 font-normal max-w-md leading-relaxed"
                 variants={fadeUp}
                 initial="hidden"
                 animate="visible"
@@ -357,20 +360,17 @@ export function App() {
 
             {/* Right: Info block */}
             <motion.div
-              className="md:col-span-5"
+              className="md:col-span-5 relative"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
               custom={0.45}>
 
-              <div className="border border-white/20 p-7 md:p-8">
-                {/* Est. */}
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="font-body text-xs text-[#C9A84C] tracking-[0.2em] uppercase">
-                    Est.
-                  </span>
-                  <span className="font-display text-2xl text-[#C9A84C]">
-                    2024
+              <div className="border border-[#C9A84C] p-7 md:p-8 bg-[#0f1827]/50 backdrop-blur-sm shadow-[0_32px_80px_rgba(0,0,0,0.72)]">
+                {/* Credentials */}
+                <div className="mb-6">
+                  <span className="font-display text-[32px] text-[#C9A84C] leading-tight block">
+                    Insight + Execution
                   </span>
                 </div>
                 <div className="w-full h-px bg-white/15 mb-5" />
@@ -385,9 +385,9 @@ export function App() {
                   map((s) =>
                   <li
                     key={s}
-                    className="font-body text-sm text-white/80 tracking-wide flex items-center gap-2">
+                    className="font-body text-[18px] text-white/80 leading-snug flex items-center gap-2.5">
 
-                      <span className="w-1 h-1 rounded-full bg-[#C9A84C] flex-shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C9A84C] flex-shrink-0" />
                       {s}
                     </li>
                   )}
@@ -457,7 +457,7 @@ export function App() {
         </div>
       </section>
 
-      {/* ── 5. SELECTED WORK ───────────────────────────────────────────────── */}
+      {/* ── 5. SELECTED WORK — HIDDEN: uncomment when ready ─────────────────
       <section
         id="work"
         className="bg-[#F8F5EF] py-24 md:py-32 border-t border-navy/10">
@@ -466,6 +466,7 @@ export function App() {
           <WorkSection />
         </div>
       </section>
+      ───────────────────────────────────────────────────────────────────────── */}
 
       {/* ── 6. MANIFESTO ───────────────────────────────────────────────────── */}
       <section className="bg-[#080E1C] py-28 md:py-36 relative overflow-hidden">
@@ -896,12 +897,12 @@ function FooterSection() {
         <img
           src={LOGO_URL}
           alt="Neocept"
-          className="h-6 w-auto"
+          className="h-8 w-auto"
           style={{ filter: 'brightness(0) invert(1)' }}
         />
 
         <div className="flex flex-wrap gap-6">
-          {['Work', 'Services', 'About', 'Thinking', 'Contact'].map((link) => (
+          {['Services', 'About', 'Thinking', 'Contact'].map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
